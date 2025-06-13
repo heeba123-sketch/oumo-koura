@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Gourmet | Accueil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --accent: #e63946;
+            --border: #dee2e6;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --button-bg: #e63946;
+            --button-hover: #d90429;
+            --section-bg: #f1f2f6;
+        }
+
+        .dark-theme {
+            /* Dark theme variables */
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+            --accent: #ff6b6b;
+            --border: #343a40;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #2d2d2d;
+            --header-bg: #1a1a1a;
+            --button-bg: #ff6b6b;
+            --button-hover: #ff5252;
+            --section-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background-color: var(--bg-secondary);
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .theme-toggle i {
+            margin-right: 0.5rem;
+        }
+
+        /* Hero Section - Modifié pour l'animation aller-retour */
+        .hero {
+            position: relative;
+            height: 85vh;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .slides-container {
+            display: flex;
+            width: 500%; /* Augmenté pour contenir les slides aller-retour */
+            height: 100%;
+            transition: transform 1.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        .slide {
+            width: 20%; /* Ajusté pour 5 slides (100% / 5) */
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .slide-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 10px var(--shadow);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px var(--shadow);
+        }
+
+        .slide-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .slide-dot.active {
+            background-color: var(--accent);
+        }
+
+        .prev-btn, .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            padding: 4rem 0;
+            background-color: var(--section-bg);
+        }
+
+        .welcome-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .welcome-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .welcome-text h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-text p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .welcome-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .welcome-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .welcome-image img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Services */
+        .services-section {
+            padding: 4rem 0;
+            background-color: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            display: inline-block;
+            padding: 0 1.5rem;
+            background-color: var(--bg-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--accent);
+            z-index: 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: transform 0.3s;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--header-bg);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links li {
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .welcome-container {
+                flex-direction: column;
+            }
+            
+            .welcome-image {
+                order: -1;
+            }
+
+            .prev-btn, .next-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+            }
+
+            .theme-toggle {
+                margin-top: 15px;
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Omo-koura</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="menu.html"><i class="fas fa-book-open"></i> Menu</a></li>
+                <li><a href="recettes.html"><i class="fas fa-book"></i> Recettes</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> À Propos</a></li>
+                <li><a href="contact.html"><i class="fas fa-phone"></i> Contact</a></li>
+            </ul>
+            <button class="theme-toggle">
+                <i class="fas fa-moon"></i> Mode Sombre
+            </button>
+        </nav>
+    </header>
+    
+
+    <section class="hero">
+        <div class="slides-container">
+            <!-- Slides aller -->
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                <div class="slide-content">
+                    <h1>Découvrez notre cuisine d'exception</h1>
+                    <p>Des plats préparés avec passion et des produits frais de saison</p>
+                    <a href="menu.html" class="btn">Découvrir notre menu</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                <div class="slide-content">
+                    <h1>Ambiance élégante et raffinée</h1>
+                    <p>Un cadre idéal pour vos dîners d'exception et événements spéciaux</p>
+                    <a href="contact.html" class="btn">Réserver une table</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                <div class="slide-content">
+                    <h1>Des chefs passionnés</h1>
+                    <p>Notre équipe de chefs talentueux réinvente la gastronomie chaque jour</p>
+                    <a href="recettes.html" class="btn">Voir nos recettes</a>
+                </div>
+            </div>
+            
+            <!-- Slides retour (copies inversées) -->
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                <div class="slide-content">
+                    <h1>Ambiance élégante et raffinée</h1>
+                    <p>Un cadre idéal pour vos dîners d'exception et événements spéciaux</p>
+                    <a href="contact.html" class="btn">Réserver une table</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                <div class="slide-content">
+                    <h1>Découvrez notre cuisine d'exception</h1>
+                    <p>Des plats préparés avec passion et des produits frais de saison</p>
+                    <a href="menu.html" class="btn">Découvrir notre menu</a>
+                </div>
+            </div>
+        </div>
+        
+        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+        
+        <div class="slide-controls">
+            <div class="slide-dot active" data-index="0"></div>
+            <div class="slide-dot" data-index="1"></div>
+            <div class="slide-dot" data-index="2"></div>
+        </div>
+    </section>
+
+    <section class="welcome-section">
+        <div class="welcome-container">
+            <div class="welcome-text">
+                <h2>Bienvenue chez Omo-koura</h2>
+                <p>Fondé en 2010, notre restaurant est devenu une référence de la gastronomie française contemporaine. Notre chef étoilé, Jean-Luc Dubois, et son équipe passionnée créent chaque jour des plats exceptionnels qui racontent une histoire et éveillent les sens.</p>
+                <p>Nous sélectionnons rigoureusement nos produits auprès de producteurs locaux engagés dans une agriculture durable et respectueuse de l'environnement. Chaque ingrédient est choisi pour sa fraîcheur, sa qualité et son authenticité.</p>
+                <p>Que ce soit pour un dîner romantique, un déjeuner d'affaires ou une célébration spéciale, notre équipe se fera un plaisir de vous accueillir dans un cadre élégant et chaleureux.</p>
+                <a href="#" class="btn">En savoir plus sur nous</a>
+            </div>
+            <div class="welcome-image">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Restaurant Omo-koura">
+            </div>
+        </div>
+    </section>
+
+    <section class="services-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Services</h2>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3 class="service-title">Dîner Gastronomique</h3>
+                    <p class="service-description">Découvrez notre menu dégustation élaboré avec des produits de saison, un voyage culinaire qui éveillera tous vos sens.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="service-title">Événements Privés</h3>
+                    <p class="service-description">Organisez vos événements spéciaux dans nos salons privés, avec un service sur mesure et une cuisine exceptionnelle.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wine-glass-alt"></i>
+                    </div>
+                    <h3 class="service-title">Ateliers Culinaires</h3>
+                    <p class="service-description">Apprenez les secrets de nos chefs lors de nos ateliers mensuels et devenez un expert en cuisine créative.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Omo-koura</div>
+            <ul class="footer-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="menu.html"><i class="fas fa-book-open"></i> Menu</a></li>
+                <li><a href="recettes.html"><i class="fas fa-book"></i> Recettes</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Réservation</a></li>
+                <li><a href="#"><i class="fas fa-phone"></i> Contact</a></li>
+            </ul>
+            <p class="copyright">&copy; 2023 Restaurant Omo-koura. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            // Gestion du changement de thème
+            const themeToggle = $('.theme-toggle');
+            const themeIcon = themeToggle.find('i');
+            
+            // Vérifier le thème stocké ou la préférence système
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.body.classList.add('dark-theme');
+                themeIcon.removeClass('fa-moon').addClass('fa-sun');
+                themeToggle.html('<i class="fas fa-sun"></i> Mode Clair');
+            }
+            
+            // Basculer le thème au clic
+            themeToggle.on('click', function() {
+                document.body.classList.toggle('dark-theme');
+                
+                if (document.body.classList.contains('dark-theme')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.removeClass('fa-moon').addClass('fa-sun');
+                    themeToggle.html('<i class="fas fa-sun"></i> Mode Clair');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.removeClass('fa-sun').addClass('fa-moon');
+                    themeToggle.html('<i class="fas fa-moon"></i> Mode Sombre');
+                }
+            });
+            
+            // Nouveau code pour l'animation aller-retour
+            let currentSlide = 0;
+            const slides = $('.slide');
+            const dots = $('.slide-dot');
+            const totalSlides = slides.length;
+            const visibleSlides = 3; // Nombre de slides uniques (sans les copies)
+            let autoSlideInterval;
+            let isGoingForward = true; // Direction du défilement
+
+            // Fonction pour changer de slide avec animation douce
+            function goToSlide(index) {
+                currentSlide = index;
+                
+                // Animation de transition plus lente
+                $('.slides-container').css('transform', `translateX(-${currentSlide * 20}%)`);
+
+                // Mettre à jour les points indicateurs
+                dots.removeClass('active');
+                
+                // Calculer l'index réel pour les points (0, 1, 2)
+                let realIndex = currentSlide;
+                if (realIndex >= visibleSlides) {
+                    realIndex = totalSlides - currentSlide - 1;
+                }
+                dots.eq(realIndex).addClass('active');
+            }
+
+            function nextSlide() {
+                if (isGoingForward) {
+                    if (currentSlide < totalSlides - 1) {
+                        goToSlide(currentSlide + 1);
+                    } else {
+                        // Revenir au début après la dernière slide de retour
+                        goToSlide(0);
+                        isGoingForward = true;
+                    }
+                } else {
+                    if (currentSlide > 0) {
+                        goToSlide(currentSlide - 1);
+                    } else {
+                        // Repartir en avant après la première slide
+                        goToSlide(1);
+                        isGoingForward = true;
+                    }
+                }
+                resetAutoSlide();
+            }
+
+            function prevSlide() {
+                if (isGoingForward) {
+                    if (currentSlide > 0) {
+                        goToSlide(currentSlide - 1);
+                    } else {
+                        // Commencer à reculer après la première slide
+                        goToSlide(totalSlides - 1);
+                        isGoingForward = false;
+                    }
+                } else {
+                    if (currentSlide < totalSlides - 1) {
+                        goToSlide(currentSlide + 1);
+                    } else {
+                        // Revenir à la fin après la dernière slide
+                        goToSlide(totalSlides - 2);
+                        isGoingForward = false;
+                    }
+                }
+                resetAutoSlide();
+            }
+
+            // Points indicateurs
+            dots.click(function() {
+                const index = $(this).data('index');
+                goToSlide(index);
+                isGoingForward = true; // Toujours aller en avant quand on clique sur un point
+                resetAutoSlide();
+            });
+
+            // Fonction pour démarrer le défilement automatique
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(function() {
+                    if (isGoingForward) {
+                        if (currentSlide < totalSlides - 1) {
+                            goToSlide(currentSlide + 1);
+                        } else {
+                            // Après la dernière slide, changer de direction
+                            goToSlide(totalSlides - 2);
+                            isGoingForward = false;
+                        }
+                    } else {
+                        if (currentSlide > 0) {
+                            goToSlide(currentSlide - 1);
+                        } else {
+                            // Après la première slide, changer de direction
+                            goToSlide(1);
+                            isGoingForward = true;
+                        }
+                    }
+                }, 6000); // Changé à 6 secondes
+            }
+            
+            // Fonction pour réinitialiser le défilement automatique
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+            
+            // Démarrer le défilement automatique
+            startAutoSlide();
+            
+            // Boutons précédent et suivant
+            $('.next-btn').click(function() {
+                nextSlide();
+            });
+            
+            $('.prev-btn').click(function() {
+                prevSlide();
+            });
+        });
+    </script>
+</body>
+</html>
