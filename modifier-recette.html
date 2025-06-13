@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Recette | Délices Gourmands</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .edit-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+        .btn-submit:hover {
+            background-color: #3e8e41;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 150px;
+            margin-top: 1rem;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-container">
+        <h1>Modifier la recette</h1>
+        <form id="edit-recipe-form">
+            <input type="hidden" id="recipe-id">
+            <div class="form-group">
+                <label for="recipe-title">Nom de la recette</label>
+                <input type="text" id="recipe-title" required>
+            </div>
+            <div class="form-group">
+                <label for="recipe-description">Description</label>
+                <textarea id="recipe-description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipe-category">Catégorie</label>
+                <select id="recipe-category" required>
+                    <option value="vegetable">Végétarien</option>
+                    <option value="poisson">Poisson</option>
+                    <option value="viande">Viande</option>
+                    <option value="dessert">Dessert</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="recipe-difficulty">Difficulté</label>
+                <select id="recipe-difficulty" required>
+                    <option value="Facile">Facile</option>
+                    <option value="Moyen">Moyen</option>
+                    <option value="Difficile">Difficile</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="recipe-time">Temps de préparation</label>
+                <input type="text" id="recipe-time" placeholder="Ex: 45 min" required>
+            </div>
+            <div class="form-group">
+                <label for="recipe-image">Image (URL ou base64)</label>
+                <input type="text" id="recipe-image" required>
+                <img id="image-preview" class="preview-image" src="" alt="Aperçu de l'image">
+            </div>
+            <button type="submit" class="btn-submit">Enregistrer les modifications</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer l'ID de la recette depuis l'URL (string !)
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipeId = urlParams.get('id');
+
+            // Charger les recettes de base (à remplacer par tes vraies recettes)
+           
+              const baseRecipes = [
+        // Page 1 (recettes originales)
+        {
+            id: 1,
+            title: "Couscous Royal",
+            description: "Un classique de la cuisine marocaine avec viande et légumes savoureux.",
+            category: "viande",
+            difficulty: "moyen",
+            time: "2h30",
+            rating: 4.5,
+            reviews: 24,
+            image: "couscous.jpg"
+        },
+        {
+            id: 2,
+            title: "Salade Marocaine",
+            description: "Une salade fraîche et colorée aux saveurs méditerranéennes.",
+            category: "vegetarien",
+            difficulty: "facile",
+            time: "25 min",
+            rating: 4,
+            reviews: 18,
+            image: "salade.jpg"
+        },
+        {
+            id: 3,
+            title: "Briouats aux amandes",
+            description: "Pâtisserie croustillante fourrée à la pâte d'amande.",
+            category: "dessert",
+            difficulty: "facile",
+            time: "45 min",
+            rating: 5,
+            reviews: 32,
+            image: "briouat.jpg"
+        },
+        {
+            id: 4,
+            title: "Poisson Chermoula",
+            description: "Poisson mariné aux herbes et épices, cuit au four.",
+            category: "poisson",
+            difficulty: "difficile",
+            time: "1h15",
+            rating: 4.5,
+            reviews: 14,
+            image: "charmoula.jpg"
+        },
+        {
+            id: 5,
+            title: "Harira Express",
+            description: "Version rapide de la soupe traditionnelle marocaine.",
+            category: "rapide",
+            difficulty: "facile",
+            time: "35 min",
+            rating: 4,
+            reviews: 21,
+            image: "harira.jpg"
+        },
+        {
+            id: 6,
+            title: "Tajine d'agneau",
+            description: "Tajine d'agneau aux pruneaux et amandes, une merveille sucrée-salée.",
+            category: "viande",
+            difficulty: "moyen",
+            time: "2h",
+            rating: 5,
+            reviews: 29,
+            image: "taginii.jpg"
+        },
+        
+        // Page 2 (nouvelles recettes)
+        {
+            id: 7,
+            title: "Pastilla au poulet",
+            description: "Feuilleté sucré-salé garni de poulet et d'amandes.",
+            category: "viande",
+            difficulty: "difficile",
+            time: "2h45",
+            rating: 5,
+            reviews: 37,
+            image: "pastila.jpg"
+        },
+        {
+            id: 8,
+            title: "Zaalouk",
+            description: "Caviar d'aubergines à la marocaine.",
+            category: "vegetarien",
+            difficulty: "facile",
+            time: "40 min",
+            rating: 4,
+            reviews: 15,
+            image: "zaalok.jpg"
+        },
+        {
+            id: 9,
+            title: "Msemen",
+            description: "Crêpes feuilletées marocaines, parfaites pour le petit-déjeuner.",
+            category: "vegetarien",
+            difficulty: "moyen",
+            time: "1h",
+            rating: 4.5,
+            reviews: 28,
+            image: "msamen.jpg"
+        },
+        {
+            id: 10,
+            title: "Tajine de poulet aux citrons",
+            description: "Poulet mijoté avec des citrons confits et des olives.",
+            category: "viande",
+            difficulty: "moyen",
+            time: "1h30",
+            rating: 4.5,
+            reviews: 31,
+            image: "taginePoulet.jpg"
+        },
+        {
+            id: 11,
+            title: "Baghrir",
+            description: "Crêpes mille trous, servies avec du miel et du beurre fondu.",
+            category: "dessert",
+            difficulty: "facile",
+            time: "35 min",
+            rating: 4,
+            reviews: 19,
+            image: "baghrir.jpg"
+        },
+        {
+            id: 12,
+            title: "Méchoui",
+            description: "Agneau rôti à la broche, tendre et parfumé.",
+            category: "viande",
+            difficulty: "difficile",
+            time: "4h",
+            rating: 5,
+            reviews: 42,
+            image: "mechoui-marocain.webp"
+        },
+        
+        // Page 3 (encore plus de recettes)
+        {
+            id: 13,
+            title: "seffa",
+            description: "Vermicelles sucrés parfumés à la cannelle, accompagnés d'amandes grillées et de lait parfumé.",
+            category: "dessert",
+            difficulty: "moyen",
+            time: "1h30",
+            rating: 4.5,
+            reviews: 26,
+            image: "seffa.jpg"
+        },
+        {
+            id: 14,
+            title: "Makrout aux dattes",
+            description: "Pâtisserie à base de semoule fourrée aux dattes.",
+            category: "dessert",
+            difficulty: "moyen",
+            time: "1h15",
+            rating: 5,
+            reviews: 23,
+            image: "makrout.jpg"
+        },
+        {
+            id: 15,
+            title: "Tajine de poisson",
+            description: "Poisson cuit avec des légumes dans un tajine.",
+            category: "poisson",
+            difficulty: "facile",
+            time: "50 min",
+            rating: 4,
+            reviews: 17,
+            image: "tajine-poisson.jpg"
+        },
+        {
+            id: 16,
+            title: "Bissara",
+            description: "Purée de fèves, un plat simple et nourrissant.",
+            category: "vegetarien",
+            difficulty: "facile",
+            time: "30 min",
+            rating: 3.5,
+            reviews: 12,
+            image: "bessara.jpg"
+        },
+        {
+            id: 17,
+            title: "Kefta",
+            description: "Boulettes de viande épicées, grillées ou en sauce.",
+            category: "viande",
+            difficulty: "facile",
+            time: "45 min",
+            rating: 4,
+            reviews: 21,
+            image: "kefta.webp"
+        },
+        {
+            id: 18,
+            title: "Sellou",
+            description: "Poudre énergétique à base d'amandes et de sésame.",
+            category: "dessert",
+            difficulty: "facile",
+            time: "30 min",
+            rating: 4.5,
+            reviews: 15,
+            image: "sallo.jpg"
+        }
+    ];
+      
+         const userRecipes = JSON.parse(localStorage.getItem('userRecipes')) || [];
+            const allRecipes = [...baseRecipes, ...userRecipes];
+
+            // Trouver la recette à modifier
+            const recipeToEdit = allRecipes.find(recipe => recipe.id == recipeId);
+
+            if (!recipeToEdit) {
+                alert("Recette introuvable !");
+                window.location.href = 'admin-recettes.html';
+                return;
+            }
+
+            // Remplir le formulaire avec les données de la recette
+            document.getElementById('recipe-id').value = recipeToEdit.id;
+            document.getElementById('recipe-title').value = recipeToEdit.title;
+            document.getElementById('recipe-description').value = recipeToEdit.description;
+            document.getElementById('recipe-category').value = recipeToEdit.category;
+            document.getElementById('recipe-difficulty').value = recipeToEdit.difficulty;
+            document.getElementById('recipe-time').value = recipeToEdit.time.replace(' min','').trim();
+            document.getElementById('recipe-image').value = recipeToEdit.image;
+            document.getElementById('image-preview').src = recipeToEdit.image;
+
+            // Prévisualisation de l'image
+            document.getElementById('recipe-image').addEventListener('input', function() {
+                document.getElementById('image-preview').src = this.value;
+            });
+
+            // Gestion de la soumission du formulaire
+            document.getElementById('edit-recipe-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Récupérer les valeurs du formulaire
+                const updatedRecipe = {
+                    id: recipeToEdit.id,
+                    title: document.getElementById('recipe-title').value,
+                    description: document.getElementById('recipe-description').value,
+                    category: document.getElementById('recipe-category').value,
+                    difficulty: document.getElementById('recipe-difficulty').value,
+                    time: document.getElementById('recipe-time').value.trim() + ' min',
+                    image: document.getElementById('recipe-image').value,
+                    rating: recipeToEdit.rating || 0,
+                    reviews: recipeToEdit.reviews || 0,
+                    ingredients: recipeToEdit.ingredients || [],
+                    instructions: recipeToEdit.instructions || [],
+                    isUserRecipe: recipeToEdit.isUserRecipe || false
+                };
+
+                let updatedRecipes;
+                if (baseRecipes.some(r => r.id == recipeToEdit.id)) {
+                    // C'est une recette de base - on la traite comme une nouvelle recette utilisateur
+                    updatedRecipes = [
+                        ...userRecipes.filter(r => r.id !== recipeToEdit.id),
+                        updatedRecipe
+                    ];
+                } else {
+                    // C'est une recette utilisateur - on peut la modifier
+                    updatedRecipes = userRecipes.map(r =>
+                        r.id == recipeToEdit.id ? updatedRecipe : r
+                    );
+                }
+
+                // Enregistrer dans le localStorage
+                localStorage.setItem('userRecipes', JSON.stringify(updatedRecipes));
+
+                alert('Recette modifiée avec succès !');
+                window.location.href = 'admin-recettes.html';
+            });
+        });
+    </script>
+</body>
+</html>

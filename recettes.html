@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recettes | Omo-koura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --accent: #e63946;
+            --border: #dee2e6;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --button-bg: #e63946;
+            --button-hover: #d90429;
+            --section-bg: #f1f2f6;
+            --dish-card-bg: #ffffff;
+        }
+
+        .dark-theme {
+            /* Dark theme variables */
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+            --accent: #ff6b6b;
+            --border: #343a40;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #2d2d2d;
+            --header-bg: #1a1a1a;
+            --button-bg: #ff6b6b;
+            --button-hover: #ff5252;
+            --section-bg: #1a1a1a;
+            --dish-card-bg: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+           
+    font-size: 18px;
+}
+        
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode .recipe-card {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+        /* Header and Navigation */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background-color: var(--bg-secondary);
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .theme-toggle i {
+            margin-right: 0.5rem;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-primary);
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        .recipes-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .recipes-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .search-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .search-bar {
+            display: flex;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px 0 0 4px;
+            font-size: 0.9rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .search-bar button {
+            padding: 0 12px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--button-hover);
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-options select {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Toujours 3 colonnes */
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .recipe-card {
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 3px 8px var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .recipe-image {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recipe-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .recipe-card:hover .recipe-image img {
+            transform: scale(1.05);
+        }
+
+        .difficulty-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .difficulty-badge.facile { background-color: #4caf50; }
+        .difficulty-badge.moyen { background-color: #ff9800; }
+        .difficulty-badge.difficile { background-color: #f44336; }
+
+        .time-badge {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            padding: 4px 8px;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .recipe-content {
+            padding: 18px;
+        }
+
+        .category-tag {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .vegetable { background-color: #4CAF50; }
+        .poisson { background-color: #2196F3; }
+        .viande { background-color: #f44336; }
+        .dessert { background-color: #9C27B0; }
+        .rapide { background-color: #FF9800; }
+
+        h3 {
+            margin: 8px 0;
+            font-size: 1.2rem;
+        }
+
+        .recipe-description {
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .view-recipe-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 7px 12px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .view-recipe-btn:hover {
+            background-color: #d90429;
+        }
+
+        .recipe-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-recipe-btn {
+            padding: 7px 12px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .view-recipe-btn:hover {
+            background-color: var(--button-hover);
+        }
+
+        .save-recipe-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .save-recipe-btn:hover {
+            color: var(--button-hover);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            gap: 8px;
+        }
+
+        .pagination-btn {
+            padding: 7px 14px;
+            border: 1px solid var(--border);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .pagination-btn:hover:not(.active, :disabled) {
+            background-color: var(--section-bg);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--header-bg);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links li {
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 250px;
+                background-color: var(--header-bg);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1.5rem;
+                transition: all 0.5s ease;
+                z-index: 999;
+            }
+            .recipe-description {
+    font-size: 5rem; /* Par exemple */
+}
+            nav ul.active {
+                right: 0;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .footer-links li {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Omo-koura</a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="menu.html"><i class="fas fa-book-open"></i> Menu</a></li>
+                        <li><a href="recettes.html" class="active"><i class="fas fa-book"></i> Recettes</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> À Propos</a></li>
+                        <li><a href="contact.html"><i class="fas fa-phone"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle">
+                    <i class="fas fa-moon"></i> Mode Sombre
+                </button>
+                <div class="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="recipes-header">
+            <h1>Nos délicieuses recettes</h1>
+            <div class="search-filter">
+                <div class="search-bar">
+                    <input type="text" id="recipe-search" placeholder="Rechercher une recette...">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                    <button id="clear-search-btn" style="display: none;"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="filter-options">
+                    <select id="category-filter">
+                        <option value="all">Toutes les catégories</option>
+                        <option value="vegetable">Végétarien</option>
+                        <option value="poisson">Poisson</option>
+                        <option value="viande">Viande</option>
+                        <option value="dessert">Dessert</option>
+                        <option value="rapide">Rapide</option>
+                    </select>
+                    <select id="difficulty-filter">
+                        <option value="all">Tous les niveaux</option>
+                        <option value="facile">Facile</option>
+                        <option value="moyen">Moyen</option>
+                        <option value="difficile">Difficile</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="recipes-grid" id="recipes-container">
+            <!-- Les recettes seront chargées dynamiquement via JavaScript -->
+        </section>
+
+        <div class="pagination">
+            <button class="pagination-btn" data-page="1">1</button>
+            <button class="pagination-btn" data-page="2">2</button>
+            <button class="pagination-btn" data-page="3">3</button>
+            <button class="pagination-btn next-btn">Suivant <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Omo-koura</div>
+            <ul class="footer-links">
+                <li><a href="client-index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="menu.html"><i class="fas fa-book-open"></i> Menu</a></li>
+                <li><a href="recettes.html"><i class="fas fa-book"></i> Recettes</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Réservation</a></li>
+                <li><a href="#"><i class="fas fa-phone"></i> Contact</a></li>
+            </ul>
+            <p class="copyright">&copy; 2023 Restaurant Omo-koura. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+      const baseRecipes = [
+        {
+            id: 1,
+            title: "Couscous Royal",
+            description: "Un classique de la cuisine marocaine avec viande et légumes savoureux.",
+            category: "viande",
+            difficulty: "Moyen",
+            time: "2h30",
+            rating: 4.5,
+            reviews: 24,
+            image: "couscous.jpg"
+        },
+        {
+            id: 2,
+            title: "Salade Marocaine",
+            description: "Une salade fraîche et colorée aux saveurs méditerranéennes.",
+            category: "vegetable",
+            difficulty: "Facile",
+            time: "25 min",
+            rating: 4,
+            reviews: 18,
+            image: "salade.jpg"
+        },
+        {
+            id: 3,
+            title: "Briouats aux amandes",
+            description: "Pâtisserie croustillante fourrée à la pâte d'amande.",
+            category: "dessert",
+            difficulty: "Facile",
+            time: "45 min",
+            rating: 5,
+            reviews: 32,
+            image: "briouat.jpg"
+        },
+        {
+            id: 4,
+            title: "Poisson Chermoula",
+            description: "Poisson mariné aux herbes et épices, cuit au four.",
+            category: "poisson",
+            difficulty: "Difficile",
+            time: "1h15",
+            rating: 4.5,
+            reviews: 14,
+            image: "charmoula.jpg"
+        },
+        {
+            id: 5,
+            title: "Harira Express",
+            description: "Version rapide de la soupe traditionnelle marocaine.",
+            category: "rapide",
+            difficulty: "Facile",
+            time: "35 min",
+            rating: 4,
+            reviews: 21,
+            image: "harira.jpg"
+        },
+        {
+            id: 6,
+            title: "Tajine d'agneau",
+            description: "Tajine d'agneau aux pruneaux et amandes, une merveille sucrée-salée.",
+            category: "viande",
+            difficulty: "Moyen",
+            time: "2h",
+            rating: 5,
+            reviews: 29,
+            image: "taginii.jpg"
+        },
+        {
+            id: 7,
+            title: "Pastilla au poulet",
+            description: "Feuilleté sucré-salé garni de poulet et d'amandes.",
+            category: "viande",
+            difficulty: "Difficile",
+            time: "2h45",
+            rating: 5,
+            reviews: 37,
+            image: "pastila.jpg"
+        },
+        {
+            id: 8,
+            title: "Zaalouk",
+            description: "Caviar d'aubergines à la marocaine.",
+            category: "vegetable",
+            difficulty: "Facile",
+            time: "40 min",
+            rating: 4,
+            reviews: 15,
+            image: "zaalok.jpg"
+        },
+        {
+            id: 9,
+            title: "Msemen",
+            description: "Crêpes feuilletées marocaines, parfaites pour le petit-déjeuner.",
+            category: "dessert",
+            difficulty: "Moyen",
+            time: "1h",
+            rating: 4.5,
+            reviews: 28,
+            image: "msamen.jpg"
+        },
+        {
+            id: 10,
+            title: "Tajine de poulet aux citrons",
+            description: "Poulet mijoté avec des citrons confits et des olives.",
+            category: "viande",
+            difficulty: "Moyen",
+            time: "1h30",
+            rating: 4.5,
+            reviews: 31,
+            image: "taginePoulet.jpg"
+        },
+        {
+            id: 11,
+            title: "Baghrir",
+            description: "Crêpes mille trous, servies avec du miel et du beurre fondu.",
+            category: "dessert",
+            difficulty: "Facile",
+            time: "35 min",
+            rating: 4,
+            reviews: 19,
+            image: "baghrir.jpg"
+        },
+        {
+            id: 12,
+            title: "Méchoui",
+            description: "Agneau rôti à la broche, tendre et parfumé.",
+            category: "viande",
+            difficulty: "Difficile",
+            time: "4h",
+            rating: 5,
+            reviews: 42,
+            image: "mechoui-marocain.webp"
+        },
+        {
+            id: 13,
+            title: "seffa",
+            description: "Vermicelles sucrés parfumés à la cannelle, accompagnés d'amandes grillées et de lait parfumé.",
+            category: "dessert",
+            difficulty: "Moyen",
+            time: "1h30",
+            rating: 4.5,
+            reviews: 26,
+            image: "seffa.jpg"
+        },
+        {
+            id: 14,
+            title: "Makrout aux dattes",
+            description: "Pâtisserie à base de semoule fourrée aux dattes.",
+            category: "dessert",
+            difficulty: "Moyen",
+            time: "1h15",
+            rating: 5,
+            reviews: 23,
+            image: "makrout.jpg"
+        },
+        {
+            id: 15,
+            title: "Tajine de poisson",
+            description: "Poisson cuit avec des légumes dans un tajine.",
+            category: "poisson",
+            difficulty: "Facile",
+            time: "50 min",
+            rating: 4,
+            reviews: 17,
+            image: "tajine-poisson.jpg"
+        },
+        {
+            id: 16,
+            title: "Bissara",
+            description: "Purée de fèves, un plat simple et nourrissant.",
+            category: "vegetable",
+            difficulty: "Facile",
+            time: "30 min",
+            rating: 3.5,
+            reviews: 12,
+            image: "bessara.jpg"
+        },
+        {
+            id: 17,
+            title: "Kefta",
+            description: "Boulettes de viande épicées, grillées ou en sauce.",
+            category: "viande",
+            difficulty: "Facile",
+            time: "45 min",
+            rating: 4,
+            reviews: 21,
+            image: "kefta.webp"
+        },
+        {
+            id: 18,
+            title: "Sellou",
+            description: "Poudre énergétique à base d'amandes et de sésame.",
+            category: "dessert",
+            difficulty: "Facile",
+            time: "30 min",
+            rating: 4.5,
+            reviews: 15,
+            image: "sallo.jpg"
+        }
+    ];
+
+
+        const userRecipes = JSON.parse(localStorage.getItem('userRecipes')) || [];
+        let allRecipes = [...baseRecipes, ...userRecipes.filter(userRecipe =>
+            !baseRecipes.some(baseRecipe => baseRecipe.id === userRecipe.id)
+        )];
+        let filteredRecipes = [...allRecipes];
+
+        const recipesPerPage = 6;
+        let currentPage = 1;
+        let totalPages = Math.ceil(filteredRecipes.length / recipesPerPage);
+
+        const recipesContainer = document.getElementById('recipes-container');
+        const paginationButtons = document.querySelectorAll('.pagination-btn');
+        const nextButton = document.querySelector('.next-btn');
+        const searchInput = document.getElementById('recipe-search');
+        const searchButton = document.getElementById('search-btn');
+        const categoryFilter = document.getElementById('category-filter');
+        const difficultyFilter = document.getElementById('difficulty-filter');
+
+        function getCategoryName(category) {
+            const categories = {
+                'vegetable': 'Végétarien',
+                'poisson': 'Poisson',
+                'viande': 'Viande',
+                'dessert': 'Dessert',
+                'rapide': 'Rapide'
+            };
+            return categories[category] || category;
+        }
+
+        function renderRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+
+            return stars;
+        }
+
+        function updatePaginationButtons() {
+            paginationButtons.forEach(button => {
+                if (button.dataset.page) {
+                    const pageNum = parseInt(button.dataset.page);
+                    button.classList.toggle('active', pageNum === currentPage);
+                    button.disabled = pageNum > totalPages;
+                }
+            });
+            if (nextButton) {
+                nextButton.disabled = currentPage >= totalPages;
+            }
+        }
+
+        function displayRecipes(page) {
+            if (!recipesContainer) return;
+
+            recipesContainer.innerHTML = '';
+            currentPage = page;
+
+            const startIndex = (page - 1) * recipesPerPage;
+            const endIndex = startIndex + recipesPerPage;
+            const pageRecipes = filteredRecipes.slice(startIndex, endIndex);
+
+            if (pageRecipes.length === 0) {
+                recipesContainer.innerHTML = '<p class="no-results">Aucune recette ne correspond à vos critères de recherche.</p>';
+                return;
+            }
+
+            pageRecipes.forEach(recipe => {
+                const recipeCard = document.createElement('article');
+                recipeCard.className = 'recipe-card';
+                recipeCard.dataset.category = recipe.category;
+                recipeCard.dataset.difficulty = recipe.difficulty;
+
+                recipeCard.innerHTML = `
+                    <div class="recipe-image">
+                        <img src="${recipe.image}" alt="${recipe.title}">
+                        <span class="difficulty-badge ${recipe.difficulty}">
+                            ${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}
+                        </span>
+                        <span class="time-badge"><i class="far fa-clock"></i> ${recipe.time}</span>
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <span class="category-tag ${recipe.category}">${getCategoryName(recipe.category)}</span>
+                            <div class="rating">
+                                ${renderRatingStars(recipe.rating)}
+                                <span>(${recipe.reviews})</span>
+                            </div>
+                        </div>
+                        <h3>${recipe.title}</h3>
+                        <p class="recipe-description">${recipe.description}</p>
+                        <div class="recipe-footer">
+                            <a href="recipe-detail.html?id=${recipe.id}" class="view-recipe-btn">Voir la recette</a>
+                            <button class="save-recipe-btn"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                `;
+
+                recipesContainer.appendChild(recipeCard);
+            });
+
+            updatePaginationButtons();
+        }
+
+        function filterRecipes() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedCategory = categoryFilter.value;
+            const selectedDifficulty = difficultyFilter.value;
+
+            filteredRecipes = allRecipes.filter(recipe => {
+                const matchesSearch = recipe.title.toLowerCase().includes(searchTerm) ||
+                                    recipe.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || recipe.category === selectedCategory;
+                const matchesDifficulty = selectedDifficulty === 'all' || recipe.difficulty === selectedDifficulty;
+
+                return matchesSearch && matchesCategory && matchesDifficulty;
+            });
+
+            totalPages = Math.ceil(filteredRecipes.length / recipesPerPage);
+            currentPage = 1;
+            displayRecipes(currentPage);
+        }
+
+        // Événements
+        if (searchInput && searchButton) {
+            searchButton.addEventListener('click', filterRecipes);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    filterRecipes();
+                }
+            });
+        }
+
+        if (categoryFilter && difficultyFilter) {
+            categoryFilter.addEventListener('change', filterRecipes);
+            difficultyFilter.addEventListener('change', filterRecipes);
+        }
+
+        if (paginationButtons.length > 0 && nextButton && recipesContainer) {
+            paginationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this === nextButton) {
+                        if (currentPage < totalPages) {
+                            displayRecipes(currentPage + 1);
+                        }
+                    } else if (this.dataset.page) {
+                        const pageNum = parseInt(this.dataset.page);
+                        displayRecipes(pageNum);
+                    }
+                });
+            });
+        }
+
+        // Gestion du thème
+        function initTheme() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (!themeToggle) return;
+
+            const currentTheme = localStorage.getItem('theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                updateThemeIcon(true);
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const isDark = !document.body.classList.contains('dark-theme');
+                document.body.classList.toggle('dark-theme', isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateThemeIcon(isDark);
+            });
+
+            function updateThemeIcon(isDark) {
+                const icon = themeToggle.querySelector('i');
+                if (!icon) return;
+                icon.classList.toggle('fa-sun', isDark);
+                icon.classList.toggle('fa-moon', !isDark);
+                themeToggle.innerHTML = isDark 
+                    ? '<i class="fas fa-sun"></i> Mode Clair' 
+                    : '<i class="fas fa-moon"></i> Mode Sombre';
+            }
+        }
+
+        // Menu mobile hamburger
+        function initHamburgerMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('nav ul');
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+        }
+
+        // Initial display
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initHamburgerMenu();
+            displayRecipes(1);
+        });
+    </script>
+</body>
+</html>

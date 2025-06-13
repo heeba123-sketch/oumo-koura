@@ -1,0 +1,155 @@
+.admin-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.admin-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    font-family: 'Playfair Display', serif;
+}
+
+.admin-actions {
+    margin-bottom: 2rem;
+    text-align: right;
+}
+
+.btn-add {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-add:hover {
+    background-color: #3e8e41;
+}
+
+.recipes-table-container {
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.recipes-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.recipes-table th, 
+.recipes-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.recipes-table th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+    color: #555;
+}
+
+.recipe-thumbnail {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-edit, .btn-delete {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: opacity 0.3s;
+}
+
+.btn-edit {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-edit:hover, .btn-delete:hover {
+    opacity: 0.9;
+}
+
+.difficulty-badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.difficulty-badge.facile {
+    background-color: #4CAF50;
+}
+
+.difficulty-badge.moyen {
+    background-color: #FFC107;
+    color: #333;
+}
+
+.difficulty-badge.difficile {
+    background-color: #F44336;
+}
+
+.no-recipes {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+/* Dark mode styles */
+.dark-mode .recipes-table {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+.dark-mode .recipes-table th {
+    background-color: #444;
+    color: #f0f0f0;
+}
+
+.dark-mode .recipes-table td {
+    border-bottom: 1px solid #555;
+}
+
+.dark-mode .no-recipes {
+    color: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .actions-cell {
+        flex-direction: column;
+    }
+    
+    .btn-edit, .btn-delete {
+        width: 100%;
+        justify-content: center;
+    }
+}

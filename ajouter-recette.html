@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Recette | Délices Gourmands</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ajouter-recette.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+
+    <main class="add-recipe-container">
+        <h1>Ajouter une nouvelle recette</h1>
+        
+        <form id="add-recipe-form" class="add-recipe-form">
+            <div class="form-group">
+                <label for="recipe-title">Titre de la recette*</label>
+                <input type="text" id="recipe-title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="recipe-description">Description*</label>
+                <textarea id="recipe-description" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="recipe-image">Image*</label>
+                <input type="file" id="recipe-image" accept="image/*" required>
+                <div class="image-preview-container">
+                    <img id="image-preview" src="" alt="Aperçu de l'image" style="display: none; max-width: 200px;">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="recipe-category">Catégorie*</label>
+                    <select id="recipe-category" required>
+                        <option value="">Sélectionner une catégorie</option>
+                        <option value="vegetable">Végétarien</option>
+                        <option value="viande">Viande</option>
+                        <option value="poisson">Poisson</option>
+                        <option value="dessert">Dessert</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-difficulty">Difficulté*</label>
+                    <select id="recipe-difficulty" required>
+                        <option value="">Sélectionner une difficulté</option>
+                        <option value="Facile">Facile</option>
+                        <option value="Moyen">Moyen</option>
+                        <option value="Difficile">Difficile</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-time">Temps de préparation (minutes)*</label>
+                    <input type="number" id="recipe-time" min="1" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Ingrédients*</label>
+                <div id="ingredients-container">
+                    <div class="ingredient-item">
+                        <input type="text" class="ingredient-input" placeholder="Ex: 200g de farine">
+                        <button type="button" class="remove-ingredient-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <button type="button" id="add-ingredient-btn" class="btn-secondary">
+                    <i class="fas fa-plus"></i> Ajouter un ingrédient
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <label>Étapes de préparation*</label>
+                <div id="instructions-container">
+                    <div class="instruction-item">
+                        <textarea class="instruction-input" placeholder="Décrivez l'étape..."></textarea>
+                        <button type="button" class="remove-instruction-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <button type="button" id="add-instruction-btn" class="btn-secondary">
+                    <i class="fas fa-plus"></i> Ajouter une étape
+                </button>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Publier la recette</button>
+                <button type="button" id="cancel-btn" class="btn-secondary">Annuler</button>
+            </div>
+        </form>
+    </main>
+
+   
+
+    <script src="ajouter-recette.js"></script>
+</body>
+</html>

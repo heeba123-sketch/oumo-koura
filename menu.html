@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu du Restaurant | Omo-koura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --accent: #e63946;
+            --border: #dee2e6;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --button-bg: #e63946;
+            --button-hover: #d90429;
+            --section-bg: #f1f2f6;
+            --dish-card-bg: #ffffff;
+        }
+
+        .dark-theme {
+            /* Dark theme variables */
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+            --accent: #ff6b6b;
+            --border: #343a40;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #2d2d2d;
+            --header-bg: #1a1a1a;
+            --button-bg: #ff6b6b;
+            --button-hover: #ff5252;
+            --section-bg: #1a1a1a;
+            --dish-card-bg: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background-color: var(--bg-secondary);
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .theme-toggle i {
+            margin-right: 0.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 10px var(--shadow);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px var(--shadow);
+        }
+
+        /* Menu Section */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            color: var(--accent);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .dish-card {
+            background: var(--dish-card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow);
+        }
+
+        .dish-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .dish-info {
+            padding: 20px;
+        }
+
+        .dish-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .dish-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .dish-price {
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .dish-desc {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+
+        .dish-category {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: var(--section-bg);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Commentaires */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .comments-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+        
+        .comments-title i {
+            color: var(--accent);
+        }
+        
+        .comment-form {
+            margin-top: 15px;
+            background: var(--section-bg);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 10px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .comment-form button {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .comment-form button:hover {
+            background-color: var(--button-hover);
+        }
+        
+        .comments-list {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .comment {
+            background: var(--section-bg);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .comment-author {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .comment-date {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        .comment-content {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        
+        .no-comments {
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Reservation Form */
+        .reservation-form {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            margin-bottom: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn-reserve {
+            background-color: var(--button-bg);
+            width: 100%;
+            margin-top: 10px;
+            padding: 15px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-reserve:hover {
+            background-color: var(--button-hover);
+        }
+
+        .reservation-summary {
+            background-color: var(--section-bg);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 0 5px 5px 0;
+            color: var(--text-primary);
+        }
+
+        .reservation-summary h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .reservation-summary p {
+            margin-bottom: 8px;
+        }
+        
+
+        /* Footer */
+        footer {
+            background-color: var(--header-bg);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links li {
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+       
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .footer-links li {
+                margin: 5px 0;
+            }
+            
+            .comment-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Omo-koura</a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                        <li><a href="menu.html" class="active"><i class="fas fa-book-open"></i> Menu</a></li>
+                        <li><a href="recettes.html"><i class="fas fa-book"></i> Recettes</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> À Propos</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle">
+                    <i class="fas fa-moon"></i> Mode Sombre
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Notre Menu Exquis</h1>
+            <p>Découvrez nos délices culinaires préparés avec passion et des ingrédients frais</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <h2 class="section-title">Nos Spécialités</h2>
+        <div class="menu-container" id="menu-container">
+            <!-- Dishes will be loaded here by JavaScript -->
+        </div>
+
+        <h2 class="section-title">Réserver un Plat</h2>
+        <div class="reservation-form">
+            <form id="reservationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dish">Plat à réserver</label>
+                        <select id="dish" name="dish" required>
+                            <option value="">Sélectionnez un plat</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantité</label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Votre numéro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date et heure</label>
+                        <input type="datetime-local" id="date" name="date" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Notes supplémentaires</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Allergies, préférences spéciales..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-reserve">Réserver maintenant</button>
+            </form>
+            
+            <div class="reservation-summary" id="reservationSummary" style="display: none;">
+                <h3>Résumé de votre réservation</h3>
+                <p><strong>Plat:</strong> <span id="summaryDish"></span></p>
+                <p><strong>Quantité:</strong> <span id="summaryQuantity"></span></p>
+                <p><strong>Nom:</strong> <span id="summaryName"></span></p>
+                <p><strong>Email:</strong> <span id="summaryEmail"></span></p>
+                <p><strong>Téléphone:</strong> <span id="summaryPhone"></span></p>
+                <p><strong>Date:</strong> <span id="summaryDate"></span></p>
+                <p><strong>Notes:</strong> <span id="summaryNotes"></span></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Omo-koura</div>
+            <ul class="footer-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="#"><i class="fas fa-book-open"></i> Menu</a></li>
+                <li><a href="recettes.html"><i class="fas fa-book"></i> Recettes</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Réservation</a></li>
+                <li><a href="#"><i class="fas fa-phone"></i> Contact</a></li>
+            </ul>
+            <p class="copyright">&copy; 2023 Restaurant Omo-koura. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+   
+    <script>
+        // Sample JSON data for dishes
+        const dishes = [
+            {
+                id: 1,
+                name: "Couscous Royal",
+                description: "Un classique de la cuisine marocaine avec viande et légumes savoureux.",
+                price: 75,
+                category: "viande",
+                image: "couscous.jpg"
+            },
+            {
+                id: 2,
+                name: "Salade Marocaine",
+                description: "Une salade fraîche et colorée aux saveurs méditerranéennes.",
+                price: 18.50,
+                category: "vegetable",
+                image: "salade.jpg"
+            },
+            {
+                id: 3,
+                name: "Briouats aux amandes",
+                description: "Pâtisserie croustillante fourrée à la pâte d'amande.",
+                price: 9.90,
+                category: "desset",
+                image: "briouat.jpg"
+            },
+            {
+                id: 4,
+                name: "Tajine d'agneau",
+                description: "Tajine d'agneau aux pruneaux et amandes, une merveille sucrée-salée.",
+                price: 70,
+                category: "viande",
+                image: "taginii.jpg"
+            },
+            {
+                id: 5,
+                name: "Pastilla au poulet",
+                description: "Feuilleté sucré-salé garni de poulet et d'amandes.",
+                price: 12.50,
+                category: "viande",
+                image: "pastila.jpg"
+            },
+            {
+                id: 6,
+                name: "Thé à la Menthe Marocain",
+                description: "Thé à la Menthe Marocain",
+                price: 15.90,
+                category: "boisson",
+                image: "atay.jpg"
+            },{
+            id: 7,
+                name: "poisson chermoula",
+                description: "Poisson mariné aux herbes et épices, cuit au four.",
+                price: 15.90,
+                category: "poisson",
+            image: "charmoula.jpg"
+                
+            }
+            ,{
+            id: 8,
+                name: "msamen",
+                description: "Crêpes feuilletées marocaines, parfaites pour le petit-déjeuner",
+                price: 10,
+                category: "dessert",
+            image: "msamen.jpg"
+                
+            }
+             ,{
+            id: 9,
+                name: "makhrout aux dates",
+                description: "Pâtisserie à base de semoule fourrée aux dattes.",
+                price: 50,
+                category: "dessert",
+            image: "makrout.jpg"
+                
+            }
+            ,{
+            id: 10,
+                name: "tagine de poisson",
+                description: "Poisson cuit avec des légumes dans un tajine.",
+                price: 50,
+                category: "poisson",
+            image: "tajine-poisson.jpg"
+                
+            }
+,{
+            id: 11,
+                name: "bissara",
+                description: "Purée de fèves, un plat simple et nourrissant.",
+                price: 50,
+                category: "vegetable",
+            image: "bessara.jpg"
+                
+            }
+            ,{
+            id: 12,
+                name: "kefta",
+                description: "Boulettes de viande épicées, grillées ou en sauce.",
+                price: 50,
+                category: "viande",
+            image: "kefta.webp"
+                
+            }
+            ,{
+            id: 13,
+                name: "seffa",
+                description: "Vermicelles sucrés parfumés à la cannelle, accompagnés d'amandes grillées et de lait parfumé.",
+                price: 50,
+                category: "dessert",
+            image: "seffa.jpg"
+                
+            }
+            ,{
+            id: 14,
+                name: "baghrir",
+                description: "Crêpes mille trous, servies avec du miel et du beurre fondu.",
+                price: 50,
+                category: "dessert",
+            image: "baghrir.jpg"
+                
+            }
+              ,{
+            id: 15,
+                name: "Tajine de poulet aux citrons",
+                description: "Poulet mijoté avec des citrons confits et des olives.",
+                price: 50,
+                category: "viande",
+            image: "taginePoulet.jpg"
+                
+            }
+        ];
+        
+        // Fonction pour obtenir les commentaires du localStorage
+        function getCommentsFromStorage() {
+            const comments = localStorage.getItem('dishComments');
+            return comments ? JSON.parse(comments) : {};
+        }
+        
+        // Fonction pour sauvegarder les commentaires dans le localStorage
+        function saveCommentsToStorage(comments) {
+            localStorage.setItem('dishComments', JSON.stringify(comments));
+        }
+        
+        // Fonction pour ajouter un commentaire
+        function addComment(dishId, author, content) {
+            const comments = getCommentsFromStorage();
+            
+            if (!comments[dishId]) {
+                comments[dishId] = [];
+            }
+            
+            const newComment = {
+                id: Date.now(),
+                dishId: dishId,
+                author: author,
+                content: content,
+                date: new Date().toISOString()
+            };
+            
+            comments[dishId].push(newComment);
+            saveCommentsToStorage(comments);
+            
+            return newComment;
+        }
+        
+        // Fonction pour afficher les commentaires d'un plat
+        function displayComments(dishId, container) {
+            const comments = getCommentsFromStorage();
+            const dishComments = comments[dishId] || [];
+            
+            container.innerHTML = '';
+            
+            if (dishComments.length === 0) {
+                container.innerHTML = '<div class="no-comments">Aucun commentaire pour l\'instant. Soyez le premier à commenter!</div>';
+                return;
+            }
+            
+            // Trier les commentaires par date (du plus récent au plus ancien)
+            dishComments.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Afficher les commentaires
+            dishComments.forEach(comment => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment';
+                
+                const date = new Date(comment.date);
+                const formattedDate = date.toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                commentEl.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.author}</span>
+                        <span class="comment-date">${formattedDate}</span>
+                    </div>
+                    <div class="comment-content">${comment.content}</div>
+                `;
+                
+                container.appendChild(commentEl);
+            });
+        }
+        
+        // Fonction pour gérer la soumission d'un commentaire
+        function handleCommentSubmit(e, dishId) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const authorInput = form.querySelector('.comment-author');
+            const contentInput = form.querySelector('.comment-content');
+            
+            const author = authorInput.value.trim();
+            const content = contentInput.value.trim();
+            
+            if (!author || !content) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+            
+            // Ajouter le commentaire
+            addComment(dishId, author, content);
+            
+            // Rafraîchir l'affichage des commentaires
+            const commentsContainer = form.closest('.comments-section').querySelector('.comments-list');
+            displayComments(dishId, commentsContainer);
+            
+            // Réinitialiser le formulaire
+            form.reset();
+            
+            // Afficher un message de succès
+            const successMsg = document.createElement('div');
+            successMsg.className = 'comment-success';
+            successMsg.textContent = 'Merci pour votre commentaire!';
+            successMsg.style.color = 'green';
+            successMsg.style.marginTop = '10px';
+            form.parentNode.insertBefore(successMsg, form.nextSibling);
+            
+            // Supprimer le message après 3 secondes
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+        }
+
+        // Function to display dishes
+        function displayDishes() {
+            const menuContainer = document.getElementById('menu-container');
+            const dishSelect = document.getElementById('dish');
+            
+            // Clear existing content
+            menuContainer.innerHTML = '';
+            dishSelect.innerHTML = '<option value="">Sélectionnez un plat</option>';
+            
+            // Create dish cards
+            dishes.forEach(dish => {
+                // Create dish card
+                const dishCard = document.createElement('div');
+                dishCard.className = 'dish-card';
+                dishCard.innerHTML = `
+                    <div class="dish-image" style="background-image: url('${dish.image}')"></div>
+                    <div class="dish-info">
+                        <div class="dish-header">
+                            <h3 class="dish-name">${dish.name}</h3>
+                            <span class="dish-price">${dish.price.toFixed(2)}€</span>
+                        </div>
+                        <p class="dish-desc">${dish.description}</p>
+                        <span class="dish-category">${dish.category}</span>
+                        
+                        <div class="comments-section">
+                            <div class="comments-title">
+                                <i class="fas fa-comments"></i>
+                                <span>Commentaires</span>
+                            </div>
+                            
+                            <div class="comments-list" id="comments-${dish.id}">
+                                <!-- Les commentaires seront chargés ici -->
+                            </div>
+                            
+                            <div class="comment-form">
+                                <form class="comment-form" data-dish-id="${dish.id}">
+                                    <input type="text" class="comment-author" placeholder="Votre nom" required>
+                                    <textarea class="comment-content" placeholder="Votre commentaire..." required></textarea>
+                                    <button type="submit">Publier</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                menuContainer.appendChild(dishCard);
+                
+                // Setup comment form event
+                const commentForm = dishCard.querySelector('.comment-form');
+                commentForm.addEventListener('submit', (e) => {
+                    handleCommentSubmit(e, dish.id);
+                });
+                
+                // Load comments for this dish
+                const commentsContainer = dishCard.querySelector('.comments-list');
+                displayComments(dish.id, commentsContainer);
+                
+                // Add dish to reservation dropdown
+                const option = document.createElement('option');
+                option.value = dish.id;
+                option.textContent = `${dish.name} - ${dish.price.toFixed(2)}€`;
+                dishSelect.appendChild(option);
+            });
+        }
+
+        // Function to save reservation to localStorage
+        function saveReservation(reservation) {
+            // Get existing reservations or create new array
+            let reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+            
+            // Add new reservation with unique ID
+            reservation.id = Date.now(); // Simple unique ID based on timestamp
+            reservations.push(reservation);
+            
+            // Save back to localStorage
+            localStorage.setItem('reservations', JSON.stringify(reservations));
+            
+            return reservation;
+        }
+
+        // Function to handle reservation form submission
+        function handleReservation(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const dishId = document.getElementById('dish').value;
+            const quantity = document.getElementById('quantity').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const date = document.getElementById('date').value;
+            const notes = document.getElementById('notes').value;
+            
+            // Find selected dish
+            const selectedDish = dishes.find(dish => dish.id == dishId);
+            
+            if (!selectedDish) {
+                alert("Veuillez sélectionner un plat valide");
+                return;
+            }
+            
+            // Format date
+            const formattedDate = new Date(date).toLocaleString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // Create reservation object
+            const reservation = {
+                dishId: selectedDish.id,
+                dishName: selectedDish.name,
+                dishPrice: selectedDish.price,
+                quantity: quantity,
+                name: name,
+                email: email,
+                phone: phone,
+                date: date,
+                formattedDate: formattedDate,
+                notes: notes
+            };
+            
+            // Save to localStorage
+            saveReservation(reservation);
+            
+            // Update summary
+            document.getElementById('summaryDish').textContent = selectedDish.name;
+            document.getElementById('summaryQuantity').textContent = quantity;
+            document.getElementById('summaryName').textContent = name;
+            document.getElementById('summaryEmail').textContent = email;
+            document.getElementById('summaryPhone').textContent = phone;
+            document.getElementById('summaryDate').textContent = formattedDate;
+            document.getElementById('summaryNotes').textContent = notes || "Aucune";
+            
+            // Show summary
+            document.getElementById('reservationSummary').style.display = 'block';
+            
+            // Scroll to summary
+            document.getElementById('reservationSummary').scrollIntoView({ behavior: 'smooth' });
+            
+            // Show success message
+            alert(`Merci ${name}! Votre réservation pour ${quantity} portion(s) de "${selectedDish.name}" a été enregistrée pour le ${formattedDate}.`);
+            
+            // Reset form
+            document.getElementById('reservationForm').reset();
+            
+            // Set default date to tomorrow at 19:00
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(19, 0, 0, 0);
+            document.getElementById('date').value = tomorrow.toISOString().slice(0, 16);
+        }
+
+        // Theme toggle functionality
+        function setupThemeToggle() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.body.classList.add('dark-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Mode Clair';
+            }
+            
+            // Toggle theme on click
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');
+                
+                if (document.body.classList.contains('dark-theme')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i> Mode Clair';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i> Mode Sombre';
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Display dishes
+            displayDishes();
+            
+            // Set min date to today
+            const today = new Date();
+            const minDate = today.toISOString().slice(0, 16);
+            document.getElementById('date').min = minDate;
+            
+            // Set default date to tomorrow at 19:00
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(19, 0, 0, 0);
+            document.getElementById('date').value = tomorrow.toISOString().slice(0, 16);
+            
+            // Add form submit event
+            document.getElementById('reservationForm').addEventListener('submit', handleReservation);
+            
+            // Setup theme toggle
+            setupThemeToggle();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail Recette | Délices Gourmands</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="recipe-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+   <header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Omo-koura</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="menu.html"><i class="fas fa-book-open"></i> Menu</a></li>
+                    <li><a href="recettes.html"><i class="fas fa-book"></i> Recettes</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> À Propos</a></li>
+                    <li><a href="contact.html"><i class="fas fa-phone"></i> Contact</a></li>
+                </ul>
+            </nav>
+            <!-- Bouton de thème bien positionné -->
+            <button id="theme-toggle" class="theme-toggle">
+                <i class="fas fa-moon"></i> <span>Mode Sombre</span>
+            </button>
+        </div>
+        <!-- Hamburger menu -->
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+</header>
+
+    <main class="recipe-detail-container">
+        <div class="recipe-header">
+            <div class="recipe-image-container">
+                <img id="recipe-main-image" src="" alt="" class="recipe-main-image">
+            </div>
+            
+           <div class="recipe-info">
+    <h1 id="recipe-title"></h1>
+    <div class="recipe-meta">
+        <span id="recipe-category" class="category-badge"></span>
+        <span id="recipe-difficulty" class="difficulty-badge"></span>
+        <span id="recipe-time" class="time-badge"><i class="far fa-clock"></i></span>
+        <div class="recipe-rating"></div>
+    </div>
+    <p id="recipe-description" class="recipe-description"></p>
+    <div class="recipe-actions">
+        <button id="save-recipe-btn" class="save-recipe-btn">
+            <i class="far fa-bookmark savedRecipes" ></i> Sauvegarder
+        </button>
+        <button id="print-recipe-btn" class="print-recipe-btn">
+            <i class="fas fa-print"></i> Imprimer
+        </button>
+    </div>
+</div>
+        </div>
+
+        <div class="recipe-content">
+            <section class="ingredients-section">
+                <h2><i class="fas fa-shopping-basket"></i> Ingrédients</h2>
+                <ul id="ingredients-list" class="ingredients-list"></ul>
+            </section>
+
+            <section class="instructions-section">
+                <h2><i class="fas fa-list-ol"></i> Préparation</h2>
+                <ol id="instructions-list" class="instructions-list"></ol>
+            </section>
+        </div>
+    </main>
+  <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Omo-koura</div>
+            <ul class="footer-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="menu.html"><i class="fas fa-book-open"></i> Menu</a></li>
+                <li><a href="recettes.html"><i class="fas fa-book"></i> Recettes</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Réservation</a></li>
+                <li><a href="#"><i class="fas fa-phone"></i> Contact</a></li>
+            </ul>
+            <p class="copyright">&copy; 2023 Restaurant Omo-koura. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+
+    <script src="detail-recipe.js">
+        
+    </script>
+</body>
+</html>

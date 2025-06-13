@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Gestion des Recettes | Omo-koura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>  
+    <style>
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #212529;
+            --accent: #e63946;
+            --border: #dee2e6;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --button-bg: #e63946;
+            --button-hover: #d90429;
+        }
+        .dark-theme {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #f8f9fa;
+            --accent: #ff6b6b;
+            --border: #343a40;
+            --card-bg: #2d2d2d;
+            --header-bg: #1a1a1a;
+            --button-bg: #ff6b6b;
+            --button-hover: #ff5252;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background-color: var(--bg-secondary);
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+        .theme-toggle i {
+            margin-right: 0.5rem;
+        }
+        main {
+            padding: 40px 20px;
+        }
+        footer {
+            background-color: var(--header-bg);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-links a i {
+            margin-right: 5px;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        .copyright {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+            nav ul li {
+                margin: 5px 0;
+            }
+        }
+        /* Style for recipes table */
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        h1.section-title {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+        .add-recipe-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            background-color: var(--button-bg);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .add-recipe-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+        }
+        .recipes-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            box-shadow: 0 2px 15px var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .recipes-table th,
+        .recipes-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .recipes-table th {
+            background-color: var(--accent);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .recipes-table tr:last-child td {
+            border-bottom: none;
+        }
+        .recipes-table tr:hover {
+            background-color: rgba(230, 57, 70, 0.05);
+        }
+
+        /* ✅ Taille uniforme pour toutes les images */
+        .recipe-image {
+            width: 200px; /* Ajustez cette valeur selon vos besoins */
+            height: 150px; /* ou width: 100%; height: auto; si responsive */
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        .edit-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .edit-btn:hover {
+            background-color: #0b7dda;
+        }
+        .delete-btn:hover {
+            background-color: #e84c3c;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+<!-- Header avec Menu -->
+<header>
+    <div class="container">
+        <div class="header-content">
+            <a href="#" class="logo"><i class="fas fa-utensils"></i>Omo-koura</a>
+            <button class="theme-toggle">
+                <i class="fas fa-moon"></i> Mode Sombre
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Contenu principal - Gestion des recettes -->
+<div class="admin-container">
+    <h1 class="section-title">Gestion des Recettes</h1>
+    <a href="ajouter-recette.html" class="add-recipe-btn"><i class="fas fa-plus-circle"></i> Ajouter une recette</a>
+    <table class="recipes-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Catégorie</th>
+                <th>Temps</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="recipes-list">
+            <!-- Recipes will be loaded here via JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">Omo-koura</div>
+        <ul class="footer-links">
+            <li><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="#"><i class="fas fa-book-open"></i> Menu</a></li>
+            <li><a href="#"><i class="fas fa-book"></i> Recettes</a></li>
+            <li><a href="#"><i class="fas fa-calendar-alt"></i> Réservation</a></li>
+            <li><a href="#"><i class="fas fa-phone"></i> Contact</a></li>
+        </ul>
+        <p class="copyright">&copy; 2023 Restaurant Omo-koura. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+    // Liste complète des recettes
+    const baseRecipes = [
+        { id: 1, title: "Couscous Royal", description: "Un classique de la cuisine marocaine avec viande et légumes savoureux.", category: "viande", difficulty: "moyen", time: "2h30", rating: 4.5, reviews: 24, image: "couscous.jpg" },
+        { id: 2, title: "Salade Marocaine", description: "Une salade fraîche et colorée aux saveurs méditerranéennes.", category: "vegetarien", difficulty: "facile", time: "25 min", rating: 4, reviews: 18, image: "salade.jpg" },
+        { id: 3, title: "Briouats aux amandes", description: "Pâtisserie croustillante fourrée à la pâte d'amande.", category: "dessert", difficulty: "facile", time: "45 min", rating: 5, reviews: 32, image: "briouat.jpg" },
+        { id: 4, title: "Poisson Chermoula", description: "Poisson mariné aux herbes et épices, cuit au four.", category: "poisson", difficulty: "difficile", time: "1h15", rating: 4.5, reviews: 14, image: "charmoula.jpg" },
+        { id: 5, title: "Harira Express", description: "Version rapide de la soupe traditionnelle marocaine.", category: "rapide", difficulty: "facile", time: "35 min", rating: 4, reviews: 21, image: "harira.jpg" },
+        { id: 6, title: "Tajine d'agneau", description: "Tajine d'agneau aux pruneaux et amandes, une merveille sucrée-salée.", category: "viande", difficulty: "moyen", time: "2h", rating: 5, reviews: 29, image: "taginii.jpg" },
+        { id: 7, title: "Pastilla au poulet", description: "Feuilleté sucré-salé garni de poulet et d'amandes.", category: "viande", difficulty: "difficile", time: "2h45", rating: 5, reviews: 37, image: "pastila.jpg" },
+        { id: 8, title: "Zaalouk", description: "Caviar d'aubergines à la marocaine.", category: "vegetarien", difficulty: "facile", time: "40 min", rating: 4, reviews: 15, image: "zaalok.jpg" },
+        { id: 9, title: "Msemen", description: "Crêpes feuilletées marocaines, parfaites pour le petit-déjeuner.", category: "vegetarien", difficulty: "moyen", time: "1h", rating: 4.5, reviews: 28, image: "msamen.jpg" },
+        { id: 10, title: "Tajine de poulet aux citrons", description: "Poulet mijoté avec des citrons confits et des olives.", category: "viande", difficulty: "moyen", time: "1h30", rating: 4.5, reviews: 31, image: "taginePoulet.jpg" },
+        { id: 11, title: "Baghrir", description: "Crêpes mille trous, servies avec du miel et du beurre fondu.", category: "dessert", difficulty: "facile", time: "35 min", rating: 4, reviews: 19, image: "baghrir.jpg" },
+        { id: 12, title: "Méchoui", description: "Agneau rôti à la broche, tendre et parfumé.", category: "viande", difficulty: "difficile", time: "4h", rating: 5, reviews: 42, image: "mechoui-marocain.webp" },
+        { id: 13, title: "Seffa", description: "Vermicelles sucrés parfumés à la cannelle, accompagnés d'amandes grillées et de lait parfumé.", category: "dessert", difficulty: "moyen", time: "1h30", rating: 4.5, reviews: 26, image: "seffa.jpg" },
+        { id: 14, title: "Makrout aux dattes", description: "Pâtisserie à base de semoule fourrée aux dattes.", category: "dessert", difficulty: "moyen", time: "1h15", rating: 5, reviews: 23, image: "makrout.jpg" },
+        { id: 15, title: "Tajine de poisson", description: "Poisson cuit avec des légumes dans un tajine.", category: "poisson", difficulty: "facile", time: "50 min", rating: 4, reviews: 17, image: "tajine-poisson.jpg" },
+        { id: 16, title: "Bissara", description: "Purée de fèves, un plat simple et nourrissant.", category: "vegetarien", difficulty: "facile", time: "30 min", rating: 3.5, reviews: 12, image: "bessara.jpg" },
+        { id: 17, title: "Kefta", description: "Boulettes de viande épicées, grillées ou en sauce.", category: "viande", difficulty: "facile", time: "45 min", rating: 4, reviews: 21, image: "kefta.webp" },
+        { id: 18, title: "Sellou", description: "Poudre énergétique à base d'amandes et de sésame.", category: "dessert", difficulty: "facile", time: "30 min", rating: 4.5, reviews: 15, image: "sallo.jpg" }
+    ];
+
+    // Load user recipes from localStorage
+    const userRecipes = JSON.parse(localStorage.getItem('userRecipes')) || [];
+
+    // Merge base recipes and user recipes
+    let allRecipes = [...baseRecipes, ...userRecipes.filter(userRecipe =>
+        !baseRecipes.some(baseRecipe => baseRecipe.id === userRecipe.id)
+    )];
+
+    function displayRecipes() {
+        const grid = document.getElementById('recipes-list');
+        grid.innerHTML = '';
+        if (allRecipes.length === 0) {
+            grid.innerHTML = `
+                <tr>
+                    <td colspan="6" class="empty-state">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Aucune recette disponible</h3>
+                        <p>Commencez par ajouter une nouvelle recette</p>
+                    </td>
+                </tr>`;
+            return;
+        }
+        allRecipes.forEach(recipe => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><img src="${recipe.image}" alt="${recipe.title}" class="recipe-image"></td>
+                <td>${recipe.title}</td>
+                <td>${recipe.description}</td>
+                <td><span class="category-badge ${recipe.category}">${recipe.category}</span></td>
+                <td>${recipe.time}</td>
+                <td class="action-buttons">
+                    <a href="modifier-recette.html?id=${recipe.id}" class="action-btn edit-btn"><i class="fas fa-edit"></i> Modifier</a>
+                    <button class="action-btn delete-btn" onclick="deleteRecipe(${recipe.id})"><i class="fas fa-trash-alt"></i> Supprimer</button>
+                </td>
+            `;
+            grid.appendChild(row);
+        });
+    }
+
+    function deleteRecipe(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette recette ? Cette action est irréversible.")) {
+            allRecipes = allRecipes.filter(recipe => recipe.id !== id);
+            const userRecipesToSave = allRecipes.filter(recipe =>
+                !baseRecipes.some(baseRecipe => baseRecipe.id === recipe.id)
+            );
+            localStorage.setItem('userRecipes', JSON.stringify(userRecipesToSave));
+            displayRecipes();
+            alert(`La recette a été supprimée avec succès !`);
+        }
+    }
+
+    window.onload = displayRecipes;
+
+    // Toggle theme button
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i> Mode Clair';
+    }
+
+    themeToggle.addEventListener('click', function () {
+        document.body.classList.toggle('dark-theme');
+        if (document.body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i> Mode Clair';
+        } else {
+            localStorage.setItem('theme', 'light');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i> Mode Sombre';
+        }
+    });
+</script>
+</body>
+</html>
